@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: STAR SDK Backend
+  description: STAR SDK Backend
+  version: "0.2"
+servers:
+- url: https://virtserver.swaggerhub.com/Ubique-Innovation-AG/SDK-Backend/0.1
+  description: SwaggerHub API Auto Mocking
+- url: https://covid-dev-ws.ubique.ch/
+  description: dev ws
+- url: https://covid-prod-ws.ubique.ch/
+  description: prod ws
+paths:
+  /v1/{dayDate}.json:
+    get:
+      summary: getExposees
+      description: this request is available on the static server only!
+      parameters:
+      - name: dayDate
+        in: path
+        description: yyyyMMdd
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: "20200327"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ch.ubique.covid.model.ExposedOverview'
+      servers:
+      - url: https://ubiquevscoviddev.blob.core.windows.net/ubiquevscovid/
+        description: static dev
+      - url: https://ubiquevscovidprod.blob.core.windows.net/ubiquevscovid/
+        description: static prod
+  /v1/exposed:
+    post:
+      summary: addExposee
+      description: addExposee
+      parameters:
+      - name: User-Agent
+        in: header
+        description: App Identifier (PackageName/BundleIdentifier) + App-Version +
+          OS (Android/iOS) + OS-Version
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: ch.ubique.android.starsdk;1.0;iOS;13.3
+      requestBody:
+        description: N/A
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ch.ubique.covid.model.ExposeeRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/removeexposed:
+    post:
+      summary: removeExposee
+      description: removeExposee
+      parameters:
+      - name: User-Agent
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: N/A
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ch.ubique.starsdk.model.ExposeeRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    ch.ubique.starsdk.model.ExposeeRequest:
+      required:
+      - key
+      type: object
+      properties:
+        key:
+          type: string
+          example: 8c8494e3-bab5-1848-40a0-1b06991c0000
+    ch.ubique.starsdk.model.ExposedAction:
+      type: string
+      enum:
+      - ADD
+      - REMOVE
+    ch.ubique.starsdk.ExposedOverview:
+      required:
+      - exposed
+      type: object
+      properties:
+        exposed:
+          type: array
+          items:
+            $ref: '#/components/schemas/ch.ubique.starsdk.model.Exposee'
+    ch.ubique.starsdk.model.Exposee:
+      required:
+      - key
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        action:
+          $ref: '#/components/schemas/ch.ubique.starsdk.model.ExposedAction'
+        key:
+          type: string
+          example: 8c8494e3-bab5-1848-40a0-1b06991c0000

@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: STAR WS Global
+  description: STAR WS Global
+  version: "0.2"
+servers:
+- url: https://virtserver.swaggerhub.com/Ubique-Innovation-AG/UVC-WS-Global/0.2
+  description: SwaggerHub API Auto Mocking
+- url: https://discovery.next-step.io/
+  description: Discovery Service
+paths:
+  /discovery.json:
+    get:
+      summary: getDiscovery
+      description: getDiscovery
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ch.ubique.starsdk.model.ApplicationOverview'
+components:
+  schemas:
+    ch.ubique.starsdk.model.ApplicationOverview:
+      required:
+      - applications
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ch.ubique.starsdk.model.Application'
+    ch.ubique.starsdk.model.Application:
+      required:
+      - appId
+      - backendBaseUrl
+      - bleGattGuid
+      - contact
+      - description
+      - listBaseUrl
+      type: object
+      properties:
+        appId:
+          type: string
+          example: ch.ubique.covid
+        description:
+          type: string
+          example: This is the Ubique Tracing App
+        backendBaseUrl:
+          type: string
+          example: https://covid-dev-ws.ubique.ch/
+        listBaseUrl:
+          type: string
+          example: https://ubiquevscoviddev.blob.core.windows.net/ubiquevscovid/
+        bleGattGuid:
+          type: string
+          example: 8c8494e3-bab5-1848-40a0-1b06991c0000
+        contact:
+          type: string
+          example: 'Ubique Innovation AG Niederdorfstrasse 77 CH-8001 Zürich mailto:
+            covid19@ubique.ch'
