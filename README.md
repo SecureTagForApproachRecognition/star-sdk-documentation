@@ -36,3 +36,10 @@ Since time synchronization could be a problem, we prepend the counter to the res
 The following picture shows a time sequence:
 
 ![Security Architecture](NextStepSecurityArchitecture.svg)
+
+## References
+- [HMAC](https://en.wikipedia.org/wiki/HMAC)
+
+- [HMAC based OTP](https://en.wikipedia.org/wiki/HMAC-based_One-time_Password_algorithm)
+- [CommonCrypto](https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5)
+- [Android HMAC](https://developer.android.com/reference/javax/crypto/Mac)
