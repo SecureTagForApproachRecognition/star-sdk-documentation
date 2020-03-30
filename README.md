@@ -17,14 +17,22 @@ The following picture shows the complete architecture. It tries to showcase how 
 
 ## TOTP Mechanism and Data Privacy
 
-In order to guarantee privacy regulations and ensure anonymity a cryptographically secure mechanism is used. For every contact, a Timed One Time Password (TOTP) token is exchanged, generated with a secret key. As soon as a person is infected the app uploads the secret key and adds it to the infected list.
+In order to ensure anonymity of clients we use so called time based one time passwords (TOTP). To generate such a TOTP we need a secret S and a counter C. 
 
-Every application, which integrates the SDK sees this key and can thanks to the key validate if one of the tokens matches.
+The counter is calculated as following:
 
-Since those tokens change every defined time interval, it is not possible to track an ID of a specific device. 
+![C_T =\left  \lfloor {\frac{T - T_0}{T_X}} \right \rfloor](counter.gif)
 
-The figure tries to show this process in a timeline based approach.
+As a default value for the counter interval `1 minute` is used.
 
-The TOTP tokens are generated using a HMAC-SHA256 algorithm provided by the platforms themselves (Android and iOS).
+The secret itself is generated using a cryptographically secure random number generator. Since the block size of the HMAC-SHA256 algorithm is 512 bit (32 byte), our secret key has the same size. 
+
+To generate such a TOTP we use the HMAC-SHA256 algorithm. The key is together with the counter (message) hashed. As mentioned before there exist implementation on the Android and the iOS platform.
+
+If a person gets infected, she posts her secret key (and generates a new one for herself). Now using this secret key and the timestamp respectively the counter any other person who receives the secret key (since it is published on the infected list) can now validate all received tokens.
+
+Since time synchronization could be a problem, we prepend the counter to the respective HMAC-SHA256 tokens. 
+
+The following picture shows a time sequence:
 
 ![Security Architecture](NextStepSecurityArchitecture.svg)
