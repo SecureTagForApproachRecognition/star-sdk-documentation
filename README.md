@@ -25,7 +25,7 @@ The counter is calculated as following:
 
 As a default value for the counter interval `1 minute` is used.
 
-The secret itself is generated using a cryptographically secure random number generator. Since the block size of the HMAC-SHA256 algorithm is 512 bit (32 byte), our secret key has the same size. 
+The secret itself is generated using a cryptographically secure random number generator. Since the block size of the HMAC-SHA256 algorithm is 256 bit (32 byte), our secret key has the same size. 
 
 To generate such a TOTP we use the HMAC-SHA256 algorithm. The key is together with the counter (message) hashed. As mentioned before there exist implementation on the Android and the iOS platform.
 
