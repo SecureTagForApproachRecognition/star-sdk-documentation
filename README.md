@@ -37,6 +37,12 @@ The following picture shows a time sequence:
 
 ![Security Architecture](NextStepSecurityArchitecture.svg)
 
+## Counting Contacts
+
+Data privacy is inherent in the process of how we generate tokens. There is no correlation between different STAR-Tokens (except for the monotonic increasing counter). Since in BLE MAC-Randomization happens to preserve privacy in BLE-Advertisements [1](https://www.bluetooth.com/blog/bluetooth-technology-protecting-your-privacy/), and the SDK does not save the device name, we cannot know, if a "contact" was made with the same device or not. 
+
+This does not pose any problems though, since as soon as we have the secret key, we find all the tokens generated with the same key. Hence, we can then give an estimate of the contact time, which on the other hand could also be used by the algorithm, to check if a user is "possibly infected". If this data is shared by the user, this could help models to improve prediction performance (c.f. [Quantifying SARS-CoV-2 transmission suggests epidemic control with digital contact tracing](https://science.sciencemag.org/content/early/2020/03/30/science.abb6936))
+
 ## References
 - [HMAC](https://en.wikipedia.org/wiki/HMAC)
 
