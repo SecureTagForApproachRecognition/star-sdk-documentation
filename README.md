@@ -1,5 +1,10 @@
 # STAR SDK Documentation
 
+> #### Moved to DP-3T!
+> 
+> As of May 2020, all of our efforts are transitioning to [DP-3T](https://github.com/DP-3T).
+> 
+
 ## Introduction
 
 Here we try to provide a  complete overview and give some more technical details in the mechanisms used.
